@@ -37,7 +37,7 @@ public class ApiUiInteractionFlowSteps
     }
 
     [Given(@"a GET request to ""(.*)"" is sent")]
-    public async Task GivenAGetRequestToIsSent(string url)
+    public async Task SendGetRequest(string url)
     {
         var objects = await _apiClient.GetObjectsAsync(url);
 
@@ -49,13 +49,13 @@ public class ApiUiInteractionFlowSteps
     }
 
     [Given(@"the user navigates to ""(.*)""")]
-    public async Task GivenTheUserNavigatesTo(string url)
+    public async Task NavigateTo(string url)
     {
         await _homePage.NavigateAsync(url);
     }
 
     [Given(@"the user opens Slow Resources and logs the response")]
-    public async Task GivenTheUserOpensSlowResourcesAndLogsTheResponse()
+    public async Task OpenSlowResources()
     {
         var responseTask = _page.WaitForResponseAsync(response => response.Url.Contains("slow"));
         await _homePage.OpenSlowResourcesAsync();
@@ -66,19 +66,19 @@ public class ApiUiInteractionFlowSteps
     }
 
     [Given(@"the user opens Dynamic Loading Example 1")]
-    public async Task GivenTheUserOpensDynamicLoadingExample1()
+    public async Task OpenDynamicLoading()
     {
         await _homePage.OpenDynamicLoadingAsync();
     }
 
     [Given(@"the user clicks the Start button")]
-    public async Task GivenTheUserClicksTheStartButton()
+    public async Task  ClickStart()
     {
         await _dynamicLoadingPage.ClickStartAsync();
     }
 
     [Given(@"the user saves the loaded result text after loading")]
-    public async Task GivenTheUserSavesTheLoadedResultTextAfterLoading()
+    public async Task SaveLoadedText()
     {
         _testData.DynamicLoadingResultText = await _dynamicLoadingPage.GetLoadedTextAsync();
 
@@ -87,31 +87,31 @@ public class ApiUiInteractionFlowSteps
     }
 
     [When(@"the user opens Form Authentication")]
-    public async Task WhenTheUserOpensFormAuthentication()
+    public async Task OpenLoginPage()
     {
         await _homePage.OpenFormAuthenticationAsync();
     }
 
     [When(@"the user inputs the loaded result text as username")]
-    public async Task WhenTheUserInputsTheLoadedResultTextAsUsername()
+    public async Task EnterUsername()
     {
         await _page.Locator("#username").FillAsync(_testData.DynamicLoadingResultText);
     }
 
     [When(@"the user inputs the first object name from the API response as password")]
-    public async Task WhenTheUserInputsTheFirstObjectNameFromTheApiResponseAsPassword()
+    public async Task EnterPassword()
     {
         await _page.Locator("#password").FillAsync(_testData.FirstObjectName);
     }
 
     [When(@"the user clicks on the Login button")]
-    public async Task WhenTheUserClicksOnTheLoginButton()
+    public async Task ClickLogin()
     {
         await _page.GetByRole(AriaRole.Button, new() { Name = "Login" }).ClickAsync();
     }
 
     [Then(@"the error message ""(.*)"" should appear")]
-    public async Task ThenTheErrorMessageShouldAppear(string expectedMessage)
+    public async Task VerifyErrorMessage(string expectedMessage)
     {
         var actualMessage = await _formAuthenticationPage.GetErrorMessageAsync();
         Assert.That(actualMessage, Does.Contain(expectedMessage));
