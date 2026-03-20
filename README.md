@@ -26,4 +26,3 @@ API + UI interaction flow:
 - .NET 10 SDK
 - PowerShell
 - Internet connection
->>>>>>> bbbf378 (Add gitignore)
